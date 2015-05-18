@@ -38,6 +38,7 @@
 #include <opm/core/props/rock/RockCompressibility.hpp>
 
 #include <opm/core/linalg/LinearSolverFactory.hpp>
+#include <opm/core/io/eclipse/EclipseReader.hpp>
 #include <opm/autodiff/NewtonIterationBlackoilSimple.hpp>
 #include <opm/autodiff/NewtonIterationBlackoilCPR.hpp>
 
@@ -222,6 +223,19 @@ try
         new_props->setSwatInitScaling(state.saturation(),pc);
     }
 
+    WellStateFullyImplicitBlackoil wellState; // !!!!!! ******
+    if(eclipseState->getInitConfig()->getRestartInitiated()){
+        int restartStep = eclipseState->getInitConfig()->getRestartStep();
+        //WellStateFullyImplicitBlackoil wellState; // !!!!!! ******
+        wellState.resize(*eclipseState, restartStep);
+
+        const char * opm_kw = "OPM_XWEL";
+        const std::string restart_filename = "SPE1DECK.UNRST";
+
+        Opm::restore_kw(restart_filename, opm_kw, restartStep, wellState);
+        wellState.setAlreadyInitiatedTo(true); // !!!!!! ******
+    }
+
     bool use_gravity = (gravity[0] != 0.0 || gravity[1] != 0.0 || gravity[2] != 0.0);
     const double *grav = use_gravity ? &gravity[0] : 0;
 
@@ -260,7 +274,8 @@ try
     std::cout << "\n\n================ Starting main simulation loop ===============\n"
               << std::flush;
 
-    SimulatorReport fullReport = simulator.run(simtimer, state);
+    // SimulatorReport fullReport = simulator.run(simtimer, state); // !!!!!! ******
+    SimulatorReport fullReport = simulator.run(simtimer, state, wellState); // !!!!!! ******
 
     std::cout << "\n\n================    End of simulation     ===============\n\n";
     fullReport.reportFullyImplicit(std::cout);

@@ -96,7 +96,8 @@ namespace Opm
         /// \param[in,out] well_state  state of wells: bhp, perforation rates
         /// \return                    simulation report, with timing data
         SimulatorReport run(SimulatorTimer& timer,
-                            BlackoilState& state);
+                            BlackoilState& state,
+                            WellStateFullyImplicitBlackoil& well_state); // !!!!!! ******)
 
     private:
         class Impl;

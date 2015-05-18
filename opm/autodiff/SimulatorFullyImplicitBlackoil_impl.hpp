@@ -90,7 +90,8 @@ namespace Opm
              const std::vector<double>& threshold_pressures_by_face);
 
         SimulatorReport run(SimulatorTimer& timer,
-                            BlackoilState& state);
+                            BlackoilState& state,
+                            WellStateFullyImplicitBlackoil& well_state);  // !!!!!! ******)
 
     private:
         // Data.
@@ -156,9 +157,10 @@ namespace Opm
 
     template<class T>
     SimulatorReport SimulatorFullyImplicitBlackoil<T>::run(SimulatorTimer& timer,
-                                                        BlackoilState& state)
+                                                        BlackoilState& state,
+                                                        WellStateFullyImplicitBlackoil& well_state) // !!!!!! ******)
     {
-        return pimpl_->run(timer, state);
+        return pimpl_->run(timer, state, well_state); // !!!!!! ******)
     }
 
 
@@ -215,7 +217,8 @@ namespace Opm
 
     template<class T>
     SimulatorReport SimulatorFullyImplicitBlackoil<T>::Impl::run(SimulatorTimer& timer,
-                                                                 BlackoilState& state)
+                                                                 BlackoilState& state,
+                                                                 WellStateFullyImplicitBlackoil& well_state)  // !!!!!! ******
     {
         WellStateFullyImplicitBlackoil prev_well_state;
 
@@ -271,7 +274,7 @@ namespace Opm
                                        Opm::UgGridHelpers::beginFaceCentroids(grid_),
                                        props_.permeability());
             const Wells* wells = wells_manager.c_wells();
-            WellStateFullyImplicitBlackoil well_state;
+            // WellStateFullyImplicitBlackoil well_state;  // !!!!!! ******
             well_state.init(wells, state, prev_well_state);
 
             // write simulation state at the report stage
