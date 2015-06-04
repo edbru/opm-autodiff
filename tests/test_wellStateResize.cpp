@@ -443,8 +443,8 @@ BOOST_AUTO_TEST_CASE(resizeWellState) {
     wsResize.setPerfRatesValue(i2PerfRatesSet, 1);
     wsResize.setPerfPressValue(i1PerfPressSet, 0);
     wsResize.setPerfPressValue(i2PerfPressSet, 1);
-    wsResize.setPerfRatesValue(i3PerfRatesSet, 4);
-    wsResize.setPerfPressValue(i3PerfPressSet, 4);
+    wsResize.setPerfRatesValue(i3PerfRatesSet, 7);
+    wsResize.setPerfPressValue(i3PerfPressSet, 7);
 
     testSizes(eclipseState, wsResize, gridManager, 2);
     testSizes(eclipseState, wsResize, gridManager, 3);
@@ -469,10 +469,10 @@ BOOST_AUTO_TEST_CASE(resizeWellState) {
     double i3WellRatesGet = wsResize.getWellRatesValue(6);
     double i1PerfRatesGet = wsResize.getPerfRatesValue(0);
     double i2PerfRatesGet = wsResize.getPerfRatesValue(1);
-    double i3PerfRatesGet = wsResize.getPerfRatesValue(4);
+    double i3PerfRatesGet = wsResize.getPerfRatesValue(6);
     double i1PerfPressGet = wsResize.getPerfPressValue(0);
     double i2PerfPressGet = wsResize.getPerfPressValue(1);
-    double i3PerfPressGet = wsResize.getPerfPressValue(4);
+    double i3PerfPressGet = wsResize.getPerfPressValue(6);
 
     BOOST_CHECK_EQUAL(i1BhpGet, i1BhpSet);
     BOOST_CHECK_EQUAL(i2BhpGet, i2BhpSet);
